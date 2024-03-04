@@ -1,7 +1,8 @@
 from classes import Category, Product
-from pprint import pprint
-def main():
-    product_date = [
+
+"""тестовый список словарей продуктов"""
+
+product_date = [
   {
     "name": "Шоколад Milca",
     "description": "Воздушный нежный вкус шоколада",
@@ -52,6 +53,10 @@ def main():
     ]
   }
 ]
+
+"""создаем основную функцию"""
+def main():
+
 
     list_category = []
     for prod in product_date:
