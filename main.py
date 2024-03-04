@@ -55,12 +55,12 @@ product_date = [
 ]
 
 """создаем основную функцию"""
-def main():
+def bace():
 
 
     list_category = []
     for prod in product_date:
-      list_product = [un for un in prod["products"]]
+      list_product = [n for n in prod["products"]]
       category = Category(prod["name"], prod["description"], prod["products"])
       list_category.append(f'{category.get_name()} '
                            f'{category.get_description()} '
@@ -77,7 +77,7 @@ def main():
                       )
     return list_category
 
-print(main())
+print(bace())
 
 if __name__ == '__main__':
-    main()
+    bace()
