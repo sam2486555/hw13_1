@@ -1,4 +1,4 @@
-from classes import Category, Product
+import classes
 
 """тестовый список словарей продуктов"""
 
@@ -54,30 +54,32 @@ product_date = [
   }
 ]
 
-"""создаем основную функцию"""
-def bace():
+
+def convert_data(categories):
+  """Получение списков с категориями и товарами"""
+  convert_categories = []
+  for category in categories:
+    convert_products = []
+    for product in category["products"]:
+      current_product = classes.Product(product["name"],
+                                        product["description"],
+                                        product["price"],
+                                        product["quantity"])
+      convert_products.append(current_product)
+    current_category = classes.Category(category["name"],
+                                        category["description"],
+                                        convert_products)
+    convert_categories.append(current_category)
+  return convert_categories
 
 
-    list_category = []
-    for prod in product_date:
-      list_product = [n for n in prod["products"]]
-      category = Category(prod["name"], prod["description"], prod["products"])
-      list_category.append(f'{category.get_name()} '
-                           f'{category.get_description()} '
-                           f'{category.get_goods()} '
-                           )
-      result = []
-      for element in list_product:
-        product = Product(element["name"], element["description"],
-                          element["price"], element["quantity"])
-        result.append(f'{product.get_product_name()}'
-                      f'{product.get_product_description()}'
-                      f'{product.get_product_price()}'
-                      f'{product.get_product_quantity_in_stock()}'
-                      )
-    return list_category
-
-print(bace())
-
-if __name__ == '__main__':
-    bace()
+for category in convert_data(product_date):
+  print(f'Категория товара <<{category.name}>>')
+  for product in category.goods:
+    print(f'Товар - {product.name}')
+    print(f'Количество на складе: {product.quantity_in_stock}')
+    print(f'Цена товара: {product.price}')
+    new_price = float(input('Укажите новую цену - '))
+    product.price = new_price
+    print(f'Новая цена: {product.price}')
+    print(f'==================================================================')

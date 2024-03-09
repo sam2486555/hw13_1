@@ -7,24 +7,30 @@ class Category:
     counting_the_number_of_unique_products = 0
     counting_the_number_of_categories = 0
 
-
     def __init__(self, name, description, goods):
         self.name = name
         self.description = description
-        self.goods = goods
+        self.__goods = goods
 
         Category.counting_the_number_of_categories += 1
         Category.counting_the_number_of_unique_products += 1
 
-    def get_name(self):
-        return self.name
+    @property
+    def goods(self):
+        """Получение приватного атрибута __goods"""
+        return self.__goods
 
-    def get_description(self):
-        return self.description
+    def add_goods(self, product):
+        """Добавление данных приватного атрибута __goods"""
+        self.__goods.append(product)
 
-    def get_goods(self):
-        return self.goods
-
+    @property
+    def get_product(self):
+        """Получение имени, цены и оставшегося количества"""
+        current_list = []
+        for product in self.__goods:
+            current_list.append(f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.')
+        return current_list
 
 
 class Product:
@@ -32,23 +38,52 @@ class Product:
     name = str
     description = str
     price = float
-    quantity_in_stock = int
+    quantity = int
 
-
-    def __init__(self, name, description, price, quantity_in_stock):
+    def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
-        self.quantity_in_stock = quantity_in_stock
+        self.__price = price
+        self.quantity_in_stock = quantity
 
-    def get_product_name(self):
-        return self.name
+    @property
+    def price(self):
+        """Получение приватных данных через геттер"""
+        return self.__price
 
-    def get_product_description(self):
-        return self.description
+    @price.setter
+    def price(self, new_price):
+        """Условия изменения цены"""
+        if new_price <= 0:
+            print('Цена введена некоректно')
+        elif new_price < self.__price:
+            user_answer = input('Цена понизилась. Установить эту цену? (y - да, n - нет)')
+            if user_answer == 'y':
+                self.__price = new_price
+            else:
+                print('Цена осталась прежней')
+        else:
+            self.__price = new_price
 
     def get_product_price(self):
         return self.price
 
-    def get_product_quantity_in_stock(self):
-        return self.quantity_in_stock
+    @classmethod
+    def add_new_product(cls, product_data, list_of_products=None):
+        # забираем данные в переменные для удобства работы
+        name = product_data['name']
+        description = product_data['description']
+        price = product_data['price']
+        quantity = product_data['quantity']
+
+        if list_of_products:
+            for product in list_of_products:
+                if product.name == name:  # проверяем есть ли название нового товара в уже имеющихся
+                    # если товар с похожим названием найден, объединяем количество устанавливаем наибольшую стоимость
+                    product.quantity += quantity
+                    if product.price < price:
+                        product.price = price
+                    return product
+
+        new_product = cls(name, description, price, quantity)
+        return new_product
