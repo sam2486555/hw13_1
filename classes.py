@@ -25,12 +25,19 @@ class Category:
         self.__goods.append(product)
 
     @property
-    def get_product(self):
+    def __str__(self):
         """Получение имени, цены и оставшегося количества"""
         current_list = []
         for product in self.__goods:
             current_list.append(f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.')
         return current_list
+
+    def __repr__(self):
+        return f'Category({self.name}, {self.description}, {self.__goods})'
+
+    def __len__(self):
+        self.counting_the_number_of_unique_products = len(self.__goods)
+        return f'{self.name}, количество продуктов: {self.counting_the_number_of_unique_products} шт.'
 
 
 class Product:
@@ -68,6 +75,9 @@ class Product:
     def get_product_price(self):
         return self.price
 
+    def __repr__(self):
+        return f'Product({self.name}, {self.description}, {self.price}, {self.quantity})'
+
     @classmethod
     def add_new_product(cls, product_data, list_of_products=None):
         # забираем данные в переменные для удобства работы
@@ -87,3 +97,9 @@ class Product:
 
         new_product = cls(name, description, price, quantity)
         return new_product
+
+    def __str__(self):
+        return f'{self.name}, {self.__price} руб. Остаток: {self.quantity} шт.'
+
+    def __add__(self, other):
+        return self.price * self.quantity + other.price * other.quantity

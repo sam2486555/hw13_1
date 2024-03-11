@@ -14,6 +14,12 @@ def class_category():
                         "price": 76.0,
                         "quantity": 75
                     })
+                    # {
+                    #     "name": "Milca пористый темный",
+                    #     "description": "темный воздушный шоколад милка",
+                    #     "price": 76.0,
+                    #     "quantity": 80
+                    # })
 def test_category_init(class_category):
     assert class_category.name == "Шоколад Milca"
     assert class_category.description == "Воздушный нежный вкус шоколада"
@@ -25,6 +31,7 @@ def test_category_init(class_category):
                     }
     assert class_category.counting_the_number_of_categories == 1
     assert class_category.counting_the_number_of_unique_products == 1
+
 
 # def test_goods(class_category):
 #     class_category.goods()
@@ -51,15 +58,18 @@ def test_category_init(class_category):
 def class_product():
     return Product("Milca пористый молочный", "молочный воздушный шоколад милка", 76.0, 75)
 
-def test_product(class_product):
+def test_product_init(class_product):
     assert class_product.name == "Milca пористый молочный"
     assert class_product.description == "молочный воздушный шоколад милка"
     assert class_product.price == 76.0
     assert class_product.quantity_in_stock == 75
 
 
+
 def test_product_price(class_product):
     class_product.get_product_price()
     assert class_product.get_product_price() == 76.0
 
-
+# def test_add(class_product):
+#     class_product.__add__(class_product)
+#     assert
