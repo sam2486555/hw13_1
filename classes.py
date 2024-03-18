@@ -22,6 +22,12 @@ class Category:
 
     def add_goods(self, product):
         """Добавление данных приватного атрибута __goods"""
+
+        """ошибка если объект не является классом Product или его наследником"""
+
+        if not isinstance(product, Product):
+            raise TypeError("Добавлять можно только объекты Product или его наследников")
+
         self.__goods.append(product)
 
     @property
@@ -46,12 +52,14 @@ class Product:
     description = str
     price = float
     quantity = int
+    color = None
 
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name, description, price, quantity, color):
         self.name = name
         self.description = description
         self.__price = price
         self.quantity_in_stock = quantity
+        self.color = color
 
     @property
     def price(self):
@@ -79,12 +87,14 @@ class Product:
         return f'Product({self.name}, {self.description}, {self.price}, {self.quantity})'
 
     @classmethod
-    def add_new_product(cls, product_data, list_of_products=None):
+    def add_new_product(cls, product_data: dict, list_of_products: list):
         # забираем данные в переменные для удобства работы
         name = product_data['name']
         description = product_data['description']
         price = product_data['price']
         quantity = product_data['quantity']
+        color = product_data['color']
+
 
         if list_of_products:
             for product in list_of_products:
@@ -95,11 +105,59 @@ class Product:
                         product.price = price
                     return product
 
-        new_product = cls(name, description, price, quantity)
-        return new_product
+
+        return cls(product['name'], product['description'], product['price'], product['quantity'], product['color'])
 
     def __str__(self):
         return f'{self.name}, {self.__price} руб. Остаток: {self.quantity} шт.'
 
     def __add__(self, other):
-        return self.price * self.quantity + other.price * other.quantity
+        if type(self) == type(other):
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError
+
+class Smartphone(Product):
+
+    """Добавили класс смартфон с атрибутами производительность, модель, объем встроенной памяти, цвет."""
+    productivity = int
+    model = str
+    built_in_memory_capacity = int
+
+    def __init__(self, name, description, price, quantity, color, productivity, model, built_in_memory_capacity):
+
+        super().__init__(name, description, price, quantity, color)
+
+        self.productivity = productivity
+        self.model = model
+        self.built_in_memory_capacity = built_in_memory_capacity
+
+
+    @classmethod
+    def add_new_product(cls, product_data):
+
+        """Класс метод который принимает словарь и создает новый объект класса Product"""
+
+        return cls(product_data["name"], product_data["description"], product_data["price"], product_data["quantity"],
+                   product_data["productivity"], product_data["model"], product_data["built_in_memory_capacity"], product_data["color"])
+
+
+class Lawn_grass(Product):
+    """Добавили класс трава газонная с доп. атрибутами страна-производитель, срок прорастания, цвет."""
+    manufacturer_country = str
+    germination_period = float
+
+    def __init__(self, name, description, price, quantity, color, manufacturer_country, germination_period):
+
+        super().__init__(name, description, price, quantity, color)
+
+        self.manufacturer_country = manufacturer_country
+        self.germination_period = germination_period
+
+    @classmethod
+    def add_new_product(cls, product_data):
+
+        """Класс метод который принимает словарь и создает новый объект класса Product"""
+
+        return cls(product_data["name"], product_data["description"], product_data["price"], product_data["quantity"],
+                   product_data["manufacturer_country"], product_data["germination_period"], product_data["color"])
