@@ -87,14 +87,13 @@ class Product:
         return f'Product({self.name}, {self.description}, {self.price}, {self.quantity})'
 
     @classmethod
-    def add_new_product(cls, product_data: dict, list_of_products: list):
+    def add_new_product(cls, product_data: dict, list_of_products: list) -> object:
         # забираем данные в переменные для удобства работы
         name = product_data['name']
         description = product_data['description']
         price = product_data['price']
         quantity = product_data['quantity']
         color = product_data['color']
-
 
         if list_of_products:
             for product in list_of_products:
@@ -104,7 +103,6 @@ class Product:
                     if product.price < price:
                         product.price = price
                     return product
-
 
         return cls(product['name'], product['description'], product['price'], product['quantity'], product['color'])
 
@@ -117,38 +115,35 @@ class Product:
         else:
             raise TypeError
 
-class Smartphone(Product):
 
+class Smartphone(Product):
     """Добавили класс смартфон с атрибутами производительность, модель, объем встроенной памяти, цвет."""
     productivity = int
     model = str
     built_in_memory_capacity = int
 
     def __init__(self, name, description, price, quantity, color, productivity, model, built_in_memory_capacity):
-
         super().__init__(name, description, price, quantity, color)
 
         self.productivity = productivity
         self.model = model
         self.built_in_memory_capacity = built_in_memory_capacity
 
-
     @classmethod
-    def add_new_product(cls, product_data):
-
+    def add_new_product(cls, product_data: dict) -> object:
         """Класс метод который принимает словарь и создает новый объект класса Product"""
 
         return cls(product_data["name"], product_data["description"], product_data["price"], product_data["quantity"],
-                   product_data["productivity"], product_data["model"], product_data["built_in_memory_capacity"], product_data["color"])
+                   product_data["productivity"], product_data["model"], product_data["built_in_memory_capacity"],
+                   product_data["color"])
 
 
-class Lawn_grass(Product):
+class LawnGrass(Product):
     """Добавили класс трава газонная с доп. атрибутами страна-производитель, срок прорастания, цвет."""
     manufacturer_country = str
     germination_period = float
 
     def __init__(self, name, description, price, quantity, color, manufacturer_country, germination_period):
-
         super().__init__(name, description, price, quantity, color)
 
         self.manufacturer_country = manufacturer_country
@@ -156,7 +151,6 @@ class Lawn_grass(Product):
 
     @classmethod
     def add_new_product(cls, product_data):
-
         """Класс метод который принимает словарь и создает новый объект класса Product"""
 
         return cls(product_data["name"], product_data["description"], product_data["price"], product_data["quantity"],

@@ -1,7 +1,5 @@
 import pytest
 
-import classes
-
 from classes import Category, Product, Smartphone, Lawn_grass
 
 @pytest.fixture
@@ -14,12 +12,7 @@ def class_category():
                         "price": 76.0,
                         "quantity": 75
                     })
-                    # {
-                    #     "name": "Milca пористый темный",
-                    #     "description": "темный воздушный шоколад милка",
-                    #     "price": 76.0,
-                    #     "quantity": 80
-                    # })
+
 def test_category_init(class_category):
     assert class_category.name == "Шоколад Milca"
     assert class_category.description == "Воздушный нежный вкус шоколада"
@@ -35,28 +28,6 @@ def test_category_init(class_category):
 def test_len_category(class_category):
     assert class_category.__len__() == 'Шоколад Milca, количество продуктов: 4 шт.'
 
-
-# def test_goods(class_category):
-#     class_category.goods()
-#     assert class_category.goods() == {
-#                         "name":"Milca пористый молочный",
-#                         "description":"молочный воздушный шоколад милка",
-#                         "price": 76.0,
-#                         "quantity": 75
-#                     }
-#     assert type(class_category.goods()) == dict
-
-
-
-
-# def test_get_product(class_category):
-#
-#     assert class_category == {
-#         "name":"Milca пористый молочный",
-#         "description":"молочный воздушный шоколад милка",
-#         "price": 76.0,
-#         "quantity": 75
-#     }
 @pytest.fixture
 def class_product():
     return Product("Milca пористый молочный", "молочный воздушный шоколад милка", 76.0, 75, "молочный")
@@ -74,10 +45,6 @@ def test_product_price(class_product):
     class_product.get_product_price()
     assert class_product.get_product_price() == 76.0
 
-# def test_add(class_product):
-#     class_product.__add__(class_product)
-#     assert
-
 @pytest.fixture
 def class_smartphone():
     return Smartphone("Samsung Galaxy",
@@ -92,7 +59,6 @@ def test_init_smartphone(class_smartphone):
     assert class_smartphone.name == "Samsung Galaxy"
     assert class_smartphone.description == "Хорошая камера, топовые характеристики"
     assert class_smartphone.price == 180_000.0
-    #assert class_smartphone.quantity == 5
     assert class_smartphone.productivity == 2500
     assert class_smartphone.model == "S23 Ultra"
     assert class_smartphone.built_in_memory_capacity == 6
@@ -125,7 +91,6 @@ def test_init_lawn_grass(class_lawn_grass):
     assert class_lawn_grass.name == "Газон"
     assert class_lawn_grass.description == "Густая красивая трава"
     assert class_lawn_grass.price == 150.0
-   # assert class_lawn_grass.quantity == 200
     assert class_lawn_grass.manufacturer_country == "Китай"
     assert class_lawn_grass.germination_period == 3.5
     assert class_lawn_grass.color == "Зеленый цвет"
