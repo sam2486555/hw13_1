@@ -1,6 +1,6 @@
 import pytest
 
-from classes import Category, Product, Smartphone, Lawn_grass
+from classes import Category, Product, Smartphone, LawnGrass
 
 @pytest.fixture
 def class_category():
@@ -78,7 +78,7 @@ def test_creates_product_smartphone():
 
 @pytest.fixture
 def class_lawn_grass():
-    return Lawn_grass("Газон",
+    return LawnGrass("Газон",
         "Густая красивая трава",
         150.0,
         200,
@@ -96,7 +96,7 @@ def test_init_lawn_grass(class_lawn_grass):
     assert class_lawn_grass.color == "Зеленый цвет"
 
 def test_creates_product_lawn_grass():
-    assert Lawn_grass.add_new_product({
+    assert LawnGrass.add_new_product({
         "name": "Газон",
         "description": "Густая красивая трава",
         "price": 150.0,
