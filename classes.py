@@ -118,9 +118,9 @@ class Product:
 
 class Smartphone(Product):
     """Добавили класс смартфон с атрибутами производительность, модель, объем встроенной памяти, цвет."""
-    productivity = int
-    model = str
-    built_in_memory_capacity = int
+    productivity: int
+    model: str
+    built_in_memory_capacity: int
 
     def __init__(self, name, description, price, quantity, color, productivity, model, built_in_memory_capacity):
         super().__init__(name, description, price, quantity, color)
@@ -140,8 +140,8 @@ class Smartphone(Product):
 
 class LawnGrass(Product):
     """Добавили класс трава газонная с доп. атрибутами страна-производитель, срок прорастания, цвет."""
-    manufacturer_country = str
-    germination_period = float
+    manufacturer_country: str
+    germination_period: float
 
     def __init__(self, name, description, price, quantity, color, manufacturer_country, germination_period):
         super().__init__(name, description, price, quantity, color)
