@@ -1,8 +1,8 @@
 class Category:
     """ Класс категории, его атрибуты с описанием типов данных"""
-    name = str
-    description = str
-    goods = list
+    name: str
+    description: str
+    goods: list
 
     counting_the_number_of_unique_products = 0
     counting_the_number_of_categories = 0
@@ -48,10 +48,10 @@ class Category:
 
 class Product:
     """ Класс продукты, его атрибуты с описанием типов данных"""
-    name = str
-    description = str
-    price = float
-    quantity = int
+    name: str
+    description: str
+    price: float
+    quantity: int
     color = None
 
     def __init__(self, name, description, price, quantity, color):
