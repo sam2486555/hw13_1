@@ -11,7 +11,8 @@ def class_category():
                         "description":"молочный воздушный шоколад милка",
                         "price": 76.0,
                         "quantity": 75
-                    })
+                    }
+                    )
 
 def test_category_init(class_category):
     assert class_category.name == "Шоколад Milca"
