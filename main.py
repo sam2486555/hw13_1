@@ -84,7 +84,7 @@ for category in convert_data(product_date):
     print(f'Категория товара <<{category.name}>>')
     for product in category.goods:
         print(f'Товар - {product.name}')
-        print(f'Количество на складе: {product.quantity_in_stock}')
+        print(f'Количество на складе: {product.quantity}')
         print(f'Цена товара: {product.price}')
         new_price = float(input('Укажите новую цену - '))
         product.price = new_price
