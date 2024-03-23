@@ -1,3 +1,7 @@
+from abstract_product import AbstractProduct
+from mixin_repr import MixinRepr
+
+
 class Category:
     """ Класс категории, его атрибуты с описанием типов данных"""
     name: str
@@ -46,7 +50,7 @@ class Category:
         return f'{self.name}, количество продуктов: {self.counting_the_number_of_unique_products} шт.'
 
 
-class Product:
+class Product(AbstractProduct, MixinRepr):
     """ Класс продукты, его атрибуты с описанием типов данных"""
     name: str
     description: str
@@ -58,8 +62,9 @@ class Product:
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity_in_stock = quantity
+        self.quantity = quantity
         self.color = color
+        super().__init__()
 
     @property
     def price(self):
@@ -70,7 +75,7 @@ class Product:
     def price(self, new_price):
         """Условия изменения цены"""
         if new_price <= 0:
-            print('Цена введена некоректно')
+            print('Цена введена некорректно')
         elif new_price < self.__price:
             user_answer = input('Цена понизилась. Установить эту цену? (y - да, n - нет)')
             if user_answer == 'y':
@@ -84,7 +89,10 @@ class Product:
         return self.price
 
     def __repr__(self):
-        return f'Product({self.name}, {self.description}, {self.price}, {self.quantity})'
+        """
+        Выводит информацию о создании объекта, с названием класса и атрибутами
+        """
+        return super().__repr__()
 
     @classmethod
     def add_new_product(cls, product_data: dict, list_of_products: list) -> object:
@@ -93,7 +101,6 @@ class Product:
         description = product_data['description']
         price = product_data['price']
         quantity = product_data['quantity']
-        color = product_data['color']
 
         if list_of_products:
             for product in list_of_products:
@@ -104,12 +111,25 @@ class Product:
                         product.price = price
                     return product
 
-        return cls(product['name'], product['description'], product['price'], product['quantity'], product['color'])
+        return cls(product_data['name'], product_data['description'], product_data['price'], product_data['quantity'])
 
     def __str__(self):
+        """
+        Отображает данные в строковом формате, в определенном виде
+        """
         return f'{self.name}, {self.__price} руб. Остаток: {self.quantity} шт.'
 
+    def __len__(self):
+        """
+        Считает количество продукта на складе
+        """
+        return self.quantity
+
     def __add__(self, other):
+        """
+        Складывает цену, умноженную на количество продуктов
+        и возвращает общую стоимость товара
+        """
         if type(self) == type(other):
             return self.price * self.quantity + other.price * other.quantity
         else:
