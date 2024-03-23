@@ -36,7 +36,7 @@ def test_product_init(class_product):
     assert class_product.name == "Milca пористый молочный"
     assert class_product.description == "молочный воздушный шоколад милка"
     assert class_product.price == 76.0
-    assert class_product.quantity_in_stock == 75
+    assert class_product.quantity == 75
     assert class_product.color == "молочный"
 
 
