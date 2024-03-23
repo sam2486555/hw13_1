@@ -1,8 +1,8 @@
 from abstract_product import AbstractProduct
 from mixin_repr import MixinRepr
+from abstract_category_order import AbstractCategoryOrder
 
-
-class Category:
+class Category(AbstractCategoryOrder):
     """ Класс категории, его атрибуты с описанием типов данных"""
     name: str
     description: str
@@ -15,6 +15,7 @@ class Category:
         self.name = name
         self.description = description
         self.__goods = goods
+        #super().__init__(name, product)
 
         Category.counting_the_number_of_categories += 1
         Category.counting_the_number_of_unique_products += 1
@@ -36,11 +37,8 @@ class Category:
 
     @property
     def __str__(self):
-        """Получение имени, цены и оставшегося количества"""
-        current_list = []
-        for product in self.__goods:
-            current_list.append(f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.')
-        return current_list
+        """ Вывод кол-ва продуктов в следующем виде: 'Название категории, количество продуктов: 200 шт.' """
+        return f'Название категории {self.name}, количество продуктов: {len(self)} шт.'
 
     def __repr__(self):
         return f'Category({self.name}, {self.description}, {self.__goods})'
@@ -48,6 +46,16 @@ class Category:
     def __len__(self):
         self.counting_the_number_of_unique_products = len(self.__goods)
         return f'{self.name}, количество продуктов: {self.counting_the_number_of_unique_products} шт.'
+
+    def get_product(self):
+        """Получение имени, цены и остатка"""
+        current_list = []
+        for product in self.__goods:
+            current_list.append(f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.')
+        return current_list
+
+    def get_total_cost(self):
+        return self.product * self.quantity
 
 
 class Product(AbstractProduct, MixinRepr):
