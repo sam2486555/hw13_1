@@ -28,9 +28,14 @@ class Category(AbstractCategoryOrder):
     def add_goods(self, product):
         """Добавление данных приватного атрибута __goods"""
 
-        """ошибка если объект не является классом Product или его наследником"""
+        """ошибка если объект не является классом Product или его наследником
+        или его количество (товара) равно 0"""
 
-        if not isinstance(product, Product):
+        if isinstance(product, self.__class__) and isinstance(self, product.__class__):
+            if product.quantity < 1:
+                raise ValueError("Невозможно добавить товар с нулевым количеством.")
+            self.__goods.append(product)
+        else:
             raise TypeError("Добавлять можно только объекты Product или его наследников")
 
         self.__goods.append(product)
@@ -55,8 +60,18 @@ class Category(AbstractCategoryOrder):
         return current_list
 
     def get_total_cost(self):
+        """Вернет общую стоимость"""
         return self.product * self.quantity
 
+    def middle_price(self, total_amount_prices):
+        """Вернет среднее значение стоимости товаров или вернет 0
+        если количетсво товаров будет равно 0"""
+        for product in self.__goods:
+            total_amount_prices += product.price
+        try:
+            return total_amount_prices / len(self.__goods)
+        except ZeroDivisionError:
+            return 0
 
 class Product(AbstractProduct, MixinRepr):
     """ Класс продукты, его атрибуты с описанием типов данных"""
@@ -138,7 +153,7 @@ class Product(AbstractProduct, MixinRepr):
         Складывает цену, умноженную на количество продуктов
         и возвращает общую стоимость товара
         """
-        if type(self) == type(other):
+        if isinstance(other, self.__class__) and isinstance(self, other.__class__):
             return self.price * self.quantity + other.price * other.quantity
         else:
             raise TypeError
